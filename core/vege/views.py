@@ -3,7 +3,9 @@ from django.contrib import messages  # Ensure this is imported
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from .models import Receipe
-
+from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.decorators import login_required
+@login_required(login_url="/login/")
 def receipes(request):
     if request.method == "POST":
         data = request.POST
@@ -52,7 +54,26 @@ def update_receipe(request, id):
     return render(request, 'update_receipes.html', context)
 
 def login_page(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        if not User.objects.filter(username=username).exists():
+            messages.error(request, "Invalid user name")
+            return redirect('/login/') 
+        user = authenticate(username = username, password = password)
+
+        if user is None:
+            messages.error(request,'Invalid password')
+            return redirect('/login/')
+
+        else:
+            login(request,user)
+            return redirect('/receipes/')
     return render(request, 'login.html')
+def logout_page(request):
+    logout(request)
+    return redirect('/login/')
+
 
 def register_page(request):
     if request.method == "POST":

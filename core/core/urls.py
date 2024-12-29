@@ -1,6 +1,6 @@
 from django.urls import path
 from home.views import home, contact, about, success_page
-from vege.views import login_page, receipes,delete_receipe, register_page,update_receipe
+from vege.views import login_page, logout_page, receipes,delete_receipe, register_page,update_receipe
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
@@ -15,6 +15,7 @@ urlpatterns = [
     path('login/', login_page, name='login_page'),
     path('register/', register_page, name= 'register_page'),
     path('success_page/', success_page, name='success_page'),
+    path('logout/', logout_page,name='logout_page')
 ]
 
 if settings.DEBUG:
