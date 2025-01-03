@@ -4,6 +4,8 @@ from vege.views import login_page, logout_page, receipes,delete_receipe, registe
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.contrib import admin
+from django.urls import include, path
 
 urlpatterns = [
     path('receipes/', receipes, name='receipes'),
@@ -15,7 +17,8 @@ urlpatterns = [
     path('login/', login_page, name='login_page'),
     path('register/', register_page, name= 'register_page'),
     path('success_page/', success_page, name='success_page'),
-    path('logout/', logout_page,name='logout_page')
+    path('logout/', logout_page,name='logout_page'),
+    path('admin/', admin.site.urls),
 ]
 
 if settings.DEBUG:
